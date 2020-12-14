@@ -1,2 +1,8 @@
 # daicgrupo8
-Máquina de Vending IoT
+
+## Descripción
+Proyecto: Máquina de vending IoT
+
+El proyecto consistirá en...
+
+
