@@ -1,0 +1,131 @@
+<html ng-app="shoppingListApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Escaner QR</title>
+
+    <!-- Extra CSS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> <!-- Libreria JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script> <!-- Libreria Angular -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/node-uuid/1.4.7/uuid.min.js"></script> <!-- Libreria Id random -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="js/prueba.js"></script>
+
+    <!--Cognito JavaScript-->
+    <script src="js/amazon-cognito-identity.min.js"></script>
+    <script src="js/config.js"></script>
+
+    <!-- Nuevo QR -->
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="css/stylesQR.css" />
+    <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
+</head>
+
+<body class="nk-body body-wider mode-onepage bg-light" ng-controller="NewShoppingListController">
+    <p>Escanea el codigo QR de e-VENDING.</p>
+    <div id="container">
+        <canvas hidden="" id="qr-canvas" ></canvas>
+        <div id="qr-result" hidden="">
+        </div>
+    </div>
+
+    <div>
+        <label style="visibility: hidden" id="email_value"></label>
+        <label style="visibility: hidden" id="name_value"></label>
+        <label style="visibility: hidden" id="outputData"> </label>
+    </div>
+
+
+    <script>
+
+
+        //COGNITO
+        var data = {
+            UserPoolId : _config.cognito.userPoolId,
+            ClientId : _config.cognito.clientId
+        };
+        var userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
+        var cognitoUser = userPool.getCurrentUser();
+
+        window.onload = function(){
+            if (cognitoUser != null) {
+                cognitoUser.getSession(function(err, session) {
+                    if (err) {
+                        alert(err);
+                        return;
+                    }
+                    console.log('session validity: ' + session.isValid());
+                    //Set the profile info
+                    cognitoUser.getUserAttributes(function(err, result) {
+                        if (err) {
+                            console.log(err);
+                            console.log(result);
+                            return;
+                        }
+                        console.log(result);
+                        document.getElementById("name_value").innerHTML = result[2].getValue();
+                        document.getElementById("email_value").innerHTML = result[3].getValue();
+                    });
+
+                });
+            }
+        }
+
+        //LECTOR QR
+        var qrcode = window.qrcode;
+        const video = document.createElement("video");
+        const canvasElement = document.getElementById("qr-canvas");
+        const canvas = canvasElement.getContext("2d");
+        const qrResult = document.getElementById("qr-result");
+        const outputData = document.getElementById("outputData");
+        let scanning = false;
+
+        qrcode.callback = res => {
+            if (res) {
+                outputData.innerText = res;
+                alert(res);
+                angular.element($('[ng-controller="NewShoppingListController"]')).scope().addItem();
+                scanning = true;
+                qrResult.hidden = true;
+                canvasElement.hidden = false;
+                video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
+                video.srcObject = stream;
+                video.play();
+                tick();
+                scan();
+
+            }
+        };
+
+        navigator.mediaDevices
+            .getUserMedia({ video: { facingMode: "environment" } })
+            .then(function(stream) {
+                scanning = true;
+                qrResult.hidden = true;
+                canvasElement.hidden = false;
+                video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
+                video.srcObject = stream;
+                video.play();
+                tick();
+                scan();
+            });
+
+
+        function tick() {
+            canvasElement.height = video.videoHeight;
+            canvasElement.width = video.videoWidth;
+            canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
+
+            scanning && requestAnimationFrame(tick);
+        }
+
+        function scan() {
+            try {
+                qrcode.decode();
+            } catch (e) {
+                setTimeout(scan, 300);
+            }
+        }
+
+    </script>
+</body>
+</html>
