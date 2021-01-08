@@ -34,7 +34,6 @@
         <label style="visibility: hidden" id="outputData"> </label>
     </div>
 
-
     <script>
 
 
@@ -69,6 +68,39 @@
                 });
             }
         }
+
+        var app =  angular.module('shoppingListApp', []);
+        app.config(['$qProvider', function ($qProvider) {
+            $qProvider.errorOnUnhandledRejections(false);
+        }]);
+        app.controller('NewShoppingListController',['$scope', '$location', '$http', function ($scope, $location, $http) {
+            var endpoint = "https://hnkh9mr4ee.execute-api.us-east-1.amazonaws.com/prod2"; //endpoint API GATEWAY
+            $scope.addItem = function () {
+                var fecha = new Date(); //Fecha actual
+                var mes = fecha.getMonth()+1;
+                var fecha_reducida = fecha.getDate()+"-"+mes+"-"+fecha.getFullYear();
+                var hora = fecha.getHours() +":" +fecha.getMinutes() +":" +fecha.getSeconds();
+                var timeStamp = fecha_reducida + " " + hora;
+                var nevera = document.getElementById("outputData");
+                var ID = timeStamp + " " +nevera.textContent;
+                var email_usuario = document.getElementById("email_value");
+
+
+
+                var listItem = {"operation":"create","tableName":"nmf_iot_data","payload":{"Item":{"Id":ID, "Nevera":nevera.textContent, "Usuario": email_usuario.textContent , "Estado": "Lectura QR" ,"Hora_Lectura_QR": timeStamp }}}
+                $http.post(endpoint +"/qr", listItem).then(function (data) {
+                    $scope.getShoppingList();
+                });
+
+            }
+
+
+            $scope.getShoppingList = function() {
+                alert("Agregado"); //Ventana emergente
+
+
+            }
+        }]);
 
         //LECTOR QR
         var qrcode = window.qrcode;
@@ -125,6 +157,18 @@
                 setTimeout(scan, 300);
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
 
     </script>
 </body>
