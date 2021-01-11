@@ -1,19 +1,51 @@
-html {
-    height: 100%;
+/*//////////////////////////////////////////////////////////////////
+[ FONT ]*/
+
+@font-face {
+    font-family: Poppins-Regular;
+    src: url('../fonts/poppins/Poppins-Regular.ttf'); 
+}
+  
+@font-face {
+    font-family: Poppins-Medium;
+    src: url('../fonts/poppins/Poppins-Medium.ttf'); 
+}
+  
+@font-face {
+    font-family: Montserrat-Medium;
+    src: url('../fonts/montserrat/Montserrat-Medium.ttf'); 
+}
+  
+@font-face {
+    font-family: Montserrat-SemiBold;
+    src: url('../fonts/montserrat/Montserrat-SemiBold.ttf'); 
 }
 
-body {
-    font-family: sans-serif;
-    padding: 0 10px;
-    height: 100%;
-    background: white;
-    margin: 0;
+
+/*//////////////////////////////////////////////////////////////////
+[ RESTYLE TAG ]*/
+
+* {
+	margin: 0px; 
+	padding: 0px; 
+	box-sizing: border-box;
 }
 
-h1 {
-    color: white;
-    margin: 0;
-    padding: 15px;
+body, html {
+	height: 100%;
+	font-family: Poppins-Regular, sans-serif;
+}
+
+p {
+	font-family: Poppins-Regular;
+	font-size: 14px;
+	line-height: 1.7;
+	color: #666666;
+	margin: 0px;
+}
+
+h1 {    
+    margin: 0px;
 }
 
 #container {

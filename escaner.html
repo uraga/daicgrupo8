@@ -2,6 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Escaner QR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Extra CSS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> <!-- Libreria JQuery -->
@@ -18,20 +19,53 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="css/stylesQR.css" />
     <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
+
+    <!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <!--===============================================================================================-->	
+        <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <!--===============================================================================================-->	
+        <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="css/util.css">
+        <link rel="stylesheet" type="text/css" href="css/main.css">
+
+    <!--===============================================================================================-->
 </head>
 
 <body class="nk-body body-wider mode-onepage bg-light" ng-controller="NewShoppingListController">
-    <p>Escanea el codigo QR de e-VENDING.</p>
-    <div id="container">
-        <canvas hidden="" id="qr-canvas" ></canvas>
-        <div id="qr-result" hidden="">
-        </div>
-    </div>
+    
+    <div class="limiter">
+        <div class="container-login100" style="background-image: url('images/bg-01.jpg');">
+            <div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
+                <span class="login100-form-title p-b-53">
+                    Escanea el código QR de e-VENDING
+                </span>
+                <div id="container">
+                    <canvas hidden="" id="qr-canvas" ></canvas>
+                    <div id="qr-result" hidden="">
+                    </div>
+                </div>
 
-    <div>
-        <label style="visibility: hidden" id="email_value"></label>
-        <label style="visibility: hidden" id="name_value"></label>
-        <label style="visibility: hidden" id="outputData"> </label>
+                <div>
+                    <label style="visibility: hidden" id="email_value"></label>
+                    <label style="visibility: hidden" id="name_value"></label>
+                    <label style="visibility: hidden" id="outputData"> </label>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
