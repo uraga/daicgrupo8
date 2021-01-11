@@ -1,0 +1,1 @@
+Hemos tenido problemas a la hora de subir los scripts de la Raspberry a Github. Para acceder al codigo completo puede ser descargado en el siguiente enlace: https://drive.google.com/drive/folders/1lEkeOCXyXu1j_8ujlJY9hTO7jv6HQHdl?usp=sharing
